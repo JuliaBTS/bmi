@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Калькулятор ИМТ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-content">
+        <h2>⚖️ Калькулятор ИМТ</h2>
+        <button class="login-btn" onclick="openModal()">Войти</button>
+    </div>
+</header>
+
+<div class="container">
+    <h1>Калькулятор индекса массы тела</h1>
+    <div class="subtitle-box">
+		🌿 Персональные рекомендации по питанию, активности, воде и сну
+	</div>
+
+    <div class="form">
+        <input type="number" id="height" placeholder="Рост (см)" min="50" max="300">
+        <input type="number" id="weight" placeholder="Вес (кг)" min="10" max="300">
+		<input type="number" id="age" placeholder="Возраст" min="1" max="120">
+        <select id="gender">
+            <option value="male">Мужской</option>
+            <option value="female">Женский</option>
+        </select>
+
+        <button onclick="calculateBMI()">Рассчитать</button>
+    </div>
+
+    <div id="result" class="hidden">
+        <h2>Ваш результат</h2>
+        <p id="bmiValue"></p>
+        <p id="bmiCategory"></p>
+
+        <div class="scale">
+            <div class="bar"></div>
+            <div id="indicator"></div>
+        </div>
+		<button id="saveResultBtn" class="save-btn hidden" onclick="saveCurrentResult()">💾 Сохранить результат</button>
+    </div>
+
+    <h2>Таблица ИМТ</h2>
+    <table>
+        <tr>
+            <th>ИМТ</th>
+            <th>Категория</th>
+        </tr>
+        <tr id="row1"><td>< 18.5</td><td>Недостаток массы</td></tr>
+        <tr id="row2"><td>18.5 – 24.9</td><td>Норма</td></tr>
+        <tr id="row3"><td>25 – 29.9</td><td>Избыточный вес</td></tr>
+        <tr id="row4"><td>≥ 30</td><td>Ожирение</td></tr>
+    </table>
+
+    <div id="recommendations" class="hidden">
+        <h2>Рекомендации</h2>
+
+        <div class="block">
+            <h3>🍎 Питание</h3>
+            <p id="food"></p>
+        </div>
+
+        <div class="block">
+            <h3>🏋️‍♂️ Физическая активность</h3>
+            <p id="activity"></p>
+        </div>
+
+        <div class="block">
+            <h3>💧 Водный режим</h3>
+            <p id="water"></p>
+        </div>
+
+        <div class="block">
+            <h3>🧠 Сон</h3>
+            <p id="sleep"></p>
+        </div>
+    </div>
+	
+	<!-- ЛИЧНЫЙ КАБИНЕТ (виден только после входа) -->
+    <div id="personalAccount" class="personal-account hidden">
+        <h2>📊 Мои результаты ИМТ</h2>
+        
+        <div class="stats-summary">
+            <div class="stat-card-mini">
+                <i class="stat-icon">📅</i>
+                <span id="totalMeasurements">0</span>
+                <span>всего измерений</span>
+            </div>
+            <div class="stat-card-mini">
+                <i class="stat-icon">📈</i>
+                <span id="avgBMI">0</span>
+                <span>средний ИМТ</span>
+            </div>
+            <div class="stat-card-mini">
+                <i class="stat-icon">🏆</i>
+                <span id="bestCategory">—</span>
+                <span>лучший результат</span>
+            </div>
+        </div>
+        
+        <div id="historyList" class="history-list">
+            <!-- Здесь будет список сохранённых результатов -->
+            <div class="empty-history">У вас пока нет сохранённых результатов. Рассчитайте ИМТ и нажмите «Сохранить».</div>
+        </div>
+    </div>
+
+    <div class="info">
+        <h2>Что такое индекс массы тела (ИМТ)?</h2>
+        <p>
+            Индекс массы тела (ИМТ) — это показатель, позволяющий оценить соответствие массы тела человека его росту.
+            Он широко используется в медицине для выявления недостатка или избытка массы тела.
+        </p>
+
+        <h3>Формула:</h3>
+        <p><strong>ИМТ = вес (кг) / (рост (м))²</strong></p>
+
+        <h3>История:</h3>
+        <p>
+            Формула ИМТ была разработана бельгийским статистиком Адольфом Кетле в XIX веке.
+            Изначально она использовалась для анализа «среднего человека» в статистике,
+            однако позже стала применяться в медицине и диетологии.
+        </p>
+
+        <p>
+            Несмотря на широкое распространение, ИМТ не учитывает такие факторы, как мышечная масса,
+            тип телосложения и распределение жира, поэтому используется как ориентировочный показатель.
+        </p>
+		
+		<p>
+            Формула расчёта основана на рекомендациях Всемирной организации здравоохранения.
+        </p>
+    </div>
+	
+	<!-- МОДАЛЬНОЕ ОКНО -->
+	<div id="authModal" class="modal hidden">
+		<div class="modal-content">
+			<span class="close-btn" onclick="closeModal()">&times;</span>
+			
+			<div class="tabs">
+				<button id="loginTab" class="active" onclick="showTab('login')">Вход</button>
+				<button id="registerTab" onclick="showTab('register')">Регистрация</button>
+			</div>
+			
+			<!-- Вход -->
+			<div id="login" class="tab-content">
+				<input type="text" id="loginUsername" placeholder="Логин">
+				<input type="password" id="loginPassword" placeholder="Пароль">
+				<button onclick="loginUser()">Войти</button>
+			</div>
+			
+			<!-- Регистрация -->
+			<div id="register" class="tab-content hidden">
+				<input type="text" id="regName" placeholder="Имя">
+				<input type="text" id="regUsername" placeholder="Логин">
+				<input type="password" id="regPassword" placeholder="Пароль">
+				<button onclick="registerUser()">Зарегистрироваться</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<script src="script.js"></script>
+
+<footer class="footer">
+    <p>О проекте: разработан студенткой Мокейчик Ю.В.</p>
+</footer>
+
+</body>
+</html>
