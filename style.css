@@ -433,15 +433,17 @@ td, th {
 .clear-history-btn:hover {
     background: #4b5563;
 }
+/* ===== АДАПТАЦИЯ ТОЛЬКО ДЛЯ ТЕЛЕФОНОВ (ширина экрана меньше 768px) ===== */
+/* Этот блок сработает только на телефонах и планшетах в вертикальной ориентации */
 
 @media (max-width: 768px) {
 
     body {
-        font-size: 16px;
+        font-size: 16px; 
     }
 
     .container {
-        padding: 15px; 
+        padding: 15px;
         width: 100%;
         box-sizing: border-box;
     }
@@ -483,10 +485,10 @@ td, th {
     }
 
     .form input, .form select {
-        width: 100%;        
-        margin: 0;       
-        padding: 14px;   
-        font-size: 16px;   
+        width: 100%;          
+        margin: 0;     
+        padding: 14px;       
+        font-size: 16px;      
         box-sizing: border-box;
     }
 
@@ -536,9 +538,8 @@ td, th {
         font-size: 14px;
         line-height: 1.4;
     }
-
     .stats-summary {
-        flex-direction: column;  /* Карточки статистики друг под другом */
+        flex-direction: column;  
         gap: 10px;
     }
 
