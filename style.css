@@ -95,6 +95,7 @@ button:hover {
     display: none;
 }
 
+/* РЕЗУЛЬТАТ */
 #result {
     background: white;
     padding: 20px;
@@ -418,7 +419,6 @@ td, th {
     background: #dc2626;
 }
 
-/* Кнопка очистки истории */
 .clear-history-btn {
     background: #6b7280;
     padding: 8px 20px;
