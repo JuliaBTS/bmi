@@ -22,12 +22,6 @@ body {
     align-items: center;
 }
 
-.header-content h2 {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .login-btn {
     background: transparent;
     border: 2px solid #2c7a5e;
